@@ -5,6 +5,8 @@
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
+        <!-- 放置tabsview -->
+        <tags-view />
       </div>
       <app-main />
     </div>
@@ -14,7 +16,7 @@
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-
+import {mapActions} from 'vuex'
 export default {
   name: 'Layout',
   components: {
@@ -23,6 +25,8 @@ export default {
     AppMain
   },
   mixins: [ResizeMixin],
+  created(){
+  },
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
@@ -45,7 +49,8 @@ export default {
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    }
+    },
+		...mapActions(['user/getInfo'])/* 获取用户信息 */
   }
 }
 </script>
